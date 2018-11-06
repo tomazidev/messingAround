@@ -9,6 +9,8 @@ const taskInput = document.querySelector('#task');
 loadEventListeners();
 
 function loadEventListeners() {
+    //DOM Load Event
+    document.addEventListener('DOMContentLoaded', getTasks);
     // Add task event
     form.addEventListener('submit', addTask);
     // Remove Item
@@ -17,6 +19,37 @@ function loadEventListeners() {
     clearBtn.addEventListener('click', clearTasks);
     // FIlter tasks
     filter.addEventListener('keyup', filterTasks);
+
+}
+
+function getTasks (task) {
+    let tasks;
+    // Check if tasks exist in localStorage
+    if (localStorage.getItem('tasks') === null) {
+        tasks = [];
+    } else {
+        // if task found get the task and assign it to tasks var
+        tasks = JSON.parse(localStorage.getItem('tasks'));
+    }
+
+    tasks.forEach(function () {
+        const li = document.createElement('li');
+        // Add class
+        li.className = 'collection-item';
+        // create text node and append to li
+        li.appendChild(document.createTextNode(task));
+        //create delete icon link
+        const link = document.createElement('a');
+        // Add class
+        link.className = 'delete-item secondary-content';
+        // Add i con html
+        link.innerHTML = '<i class="fa fa-remove"></i>'
+        //Append link to li
+        li.appendChild(link);
+        //Append lu to ul
+        taskList.appendChild(li);
+    });
+
 
 }
 
@@ -48,7 +81,6 @@ function addTask (e) {
 
 function persistItemList (task) {
     let tasks;
-    console.log(task);
     // Check if tasks exist in localStorage
     if (localStorage.getItem('tasks') === null) {
         tasks = [];
@@ -67,8 +99,29 @@ function removeTask(e) {
     if (e.target.parentElement.classList.contains ('delete-item')) {
         if(confirm('Are you sure')) {
             e.target.parentElement.parentElement.remove();
+            
+            deleteTaskFromLocalStorage(e.target.parentElement.parentElement);
         }
     }
+}
+
+function deleteTaskFromLocalStorage (taskItem) {
+    let tasks;
+    // Check if tasks exist in localStorage
+    if (localStorage.getItem('tasks') === null) {
+        tasks = [];
+    } else {
+        // if task found get the task and assign it to tasks var
+        tasks = JSON.parse(localStorage.getItem('tasks'));
+    }
+
+    tasks.forEach(function (task, index) {
+        if (taskItem.textContent === task) {
+            tasks.splice(index, 1);
+        }
+    });
+
+    localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 function clearTasks (e) {
@@ -77,6 +130,12 @@ function clearTasks (e) {
     while (taskList.firstChild) {
         taskList.removeChild(taskList.firstChild);
     }
+
+    clearTasksLS();
+}
+
+function clearTasksLS() {
+    localStorage.clear();
 }
 
 function filterTasks (e) {
