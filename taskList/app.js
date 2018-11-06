@@ -40,8 +40,27 @@ function addTask (e) {
     //Append lu to ul
     taskList.appendChild(li);
 
+    persistItemList(taskInput.value);
+
     taskInput.value = '';
     e.preventDefault();
+}
+
+function persistItemList (task) {
+    let tasks;
+    console.log(task);
+    // Check if tasks exist in localStorage
+    if (localStorage.getItem('tasks') === null) {
+        tasks = [];
+    } else {
+        // if task found get the task and assign it to tasks var
+        tasks = JSON.parse(localStorage.getItem('tasks'));
+    }
+    //push task to tasks array
+    tasks.push(task);
+    // Set tasks to localStorge
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+
 }
 
 function removeTask(e) {
