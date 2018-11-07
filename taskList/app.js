@@ -22,22 +22,24 @@ function loadEventListeners() {
 
 }
 
-function getTasks (task) {
+function getTasks () {
     let tasks;
     // Check if tasks exist in localStorage
     if (localStorage.getItem('tasks') === null) {
+        debugger;
         tasks = [];
     } else {
+        debugger;
         // if task found get the task and assign it to tasks var
         tasks = JSON.parse(localStorage.getItem('tasks'));
     }
 
-    tasks.forEach(function () {
+    tasks.forEach(function (oko) {
         const li = document.createElement('li');
         // Add class
         li.className = 'collection-item';
         // create text node and append to li
-        li.appendChild(document.createTextNode(task));
+        li.appendChild(document.createTextNode(oko));
         //create delete icon link
         const link = document.createElement('a');
         // Add class
@@ -49,8 +51,6 @@ function getTasks (task) {
         //Append lu to ul
         taskList.appendChild(li);
     });
-
-
 }
 
 function addTask (e) {
@@ -96,7 +96,7 @@ function persistItemList (task) {
 }
 
 function removeTask(e) {
-    if (e.target.parentElement.classList.contains ('delete-item')) {
+    if (e.target.parentElement.classList.contains('delete-item')) {
         if(confirm('Are you sure')) {
             e.target.parentElement.parentElement.remove();
             
