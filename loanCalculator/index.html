@@ -7,7 +7,11 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
+    <style>
+        #loading, #results {
+            display: none;
+        }
+    </style>
     <title>LoanCalculator</title>
   </head>
   <body class="bg-dark">
@@ -38,9 +42,9 @@
                         </div>
                     </form>
                     <!-- Loader Here -->
-                    <!-- <div id="loading">
+                    <div id="loading">
                         <img src="img/loading.gif">
-                    </div> -->
+                    </div>
                     <!-- Results -->
                     <div id="results" class="pt-4">
                         <h5>Results</h5>
